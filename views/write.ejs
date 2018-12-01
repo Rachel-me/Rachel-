@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>写文章</title>
+    <script src="/vue/vue.js"></script>
+    <script src="/jquery/jquery.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        标题 <input v-model="title">
+        内容 <input v-model="content">
+        <button @click="tj">提交</button>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            title: '',
+            content: ''
+        },
+        methods: {
+            tj() {
+                $.post('/api/write_article', {
+                    title: app.title,
+                    content: app.content
+                }, function (data) {
+                    alert(data)
+                })
+            }
+        }
+    })
+
+
+</script>
+
+</html>

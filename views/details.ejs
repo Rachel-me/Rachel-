@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>文章详情</title>
+  <script src="/vue/vue.js"></script>
+  <script src="/jquery/jquery.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{title}}</h1>
+    <p>{{content}}</p>
+  </div>
+</body>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      title: '',
+      content: ''
+    }
+  })
+
+  $.post('/api/get_all_article_details_by_id', { id: GetQueryString('id') }, function (data) {
+    data = JSON.parse(data)
+    app.title = data.标题
+    app.content = data.内容
+  })
+
+  function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+  }
+</script>
+
+</html>

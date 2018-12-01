@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+<head>
+    <title>
+        博客主页
+    </title>
+    <script src="/vue/vue.js"></script>
+    <script src="/jquery/jquery.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>主页</h1>
+        <p>Welcome</p>
+
+        <li v-for="obj in articleList">
+            <a :href="'/details?id='+obj.id">{{obj.标题}}</a>
+        </li>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            articleList: []
+        }
+    })
+
+    $.post('/api/get_all_article_list', {}, function (data) {
+        app.articleList = JSON.parse(data)
+    })
+</script>
+
 </html>
